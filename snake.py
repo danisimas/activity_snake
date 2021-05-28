@@ -1,12 +1,29 @@
-import pygame, random
+import pygame
+import random
 from pygame.locals import *
+
+RUN = True
+
+move_Up = move_Down = move_Right = move_Left = move_init = False
+
+SCORE = 0
+length = 2
+speed = 75
+
+x_snake = [0]
+y_snake = [0]
+
+for i in range(0, 1000):
+    x_snake.append(-1000)
+    y_snake.append(-100)
 
 
 # Helper functions
 def on_grid_random():
     x = random.randint(0, 59)
     y = random.randint(0, 59)
-    return (x * 10, y * 10)
+    return (x * 10, 
+            y * 10)
 
 
 def collision(c1, c2):
@@ -14,24 +31,29 @@ def collision(c1, c2):
 
 
 # Macro definition for snake movement.
-UP = 0
-RIGHT = 1
-DOWN = 2
-LEFT = 3
-
 pygame.init()
 screen = pygame.display.set_mode((600, 600))
 pygame.display.set_caption('Snake')
 
-snake = [(200, 200), (210, 200), (220, 200)]
-snake_skin = pygame.Surface((10, 10))
-snake_skin.fill((255, 255, 255))  # White
+cover = pygame.Surface(screen.get_size())
+cover = cover.convert()
+cover.fill((250, 250, 250))
+screen.blit(cover, (0, 0))
 
+pygame.display.flip()
+
+head = pygame.image.load('assets/body_snake_arthur.png').convert_alpha()
+head = pygame.transform.scale(head, (35, 35))
 apple_pos = on_grid_random()
 apple = pygame.Surface((10, 10))
 apple.fill((255, 0, 0))
 
-my_direction = LEFT
+
+position_snake = head.get_rect()
+
+x_snake[0] = position_snake.x
+y_snake[0] = position_snake.y
+my_direction = 3
 
 clock = pygame.time.Clock()
 
@@ -56,7 +78,7 @@ while not game_over:
             if event.key == K_RIGHT and my_direction != LEFT:
                 my_direction = RIGHT
 
-    if collision(snake[0], apple_pos):
+    '''if collision(snake[0], apple_pos):
         apple_pos = on_grid_random()
         snake.append((0, 0))
         score = score + 1
@@ -77,8 +99,8 @@ while not game_over:
 
     for i in range(len(snake) - 1, 0, -1):
         snake[i] = (snake[i - 1][0], snake[i - 1][1])
-
-    # Actually make the snake move.
+'''
+    ''' Actually make the snake move.
     if my_direction == UP:
         snake[0] = (snake[0][0], snake[0][1] - 10)
     if my_direction == DOWN:
@@ -100,9 +122,8 @@ while not game_over:
     score_rect = score_font.get_rect()
     score_rect.topleft = (600 - 120, 10)
     screen.blit(score_font, score_rect)
-
-    for pos in snake:
-        screen.blit(snake_skin, pos)
+'''
+    screen.blit(head, (0, 0))
 
     pygame.display.update()
 
