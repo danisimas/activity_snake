@@ -73,6 +73,9 @@ body_part_1 = pygame.transform.scale(body_part_1, (25, 25))
 fruit = pygame.image.load("assets/apple_arthur.png").convert_alpha()  # The fruit
 fruit = pygame.transform.scale(fruit, (25, 25))
 
+wall = pygame.image.load("assets/wall-pixe-art-1.png.png").convert_alpha()
+wall = pygame.transform.scale(wall, (25, 50))
+
 # Storing the head and fruit's coordinates in variables
 
 position_1 = head.get_rect()
@@ -87,6 +90,19 @@ y_snake_position[0] = position_1.y
 
 position_fruit.x = randint(2, 10) * STEP
 position_fruit.y = randint(2, 10) * STEP
+
+
+# Create Walls
+def walls():
+    for i in range(34):
+        wall_x = pygame.transform.rotate(wall, 180)
+        window.blit(wall, (-3+(i*18), 5))
+        window.blit(wall_x, (-3+(i*18), 564))
+    for j in range(31):
+        wall_y = pygame.transform.rotate(wall, 90)
+        wall_y_2 = pygame.transform.rotate(wall_y, 180)
+        window.blit(wall_y, (-13, 27 + (j * 18)))
+        window.blit(wall_y_2, (564, 27 + (j * 18)))
 
 
 def init_snake():
@@ -206,12 +222,11 @@ def init_snake():
                     position_fruit.y = randint(1, 20) * STEP
 
             # Increasing the size of the snake and the score
-
             snake = snake + 1
             score_temp = score_temp + 1
 
         # Displaying the score
-
+        walls()
         text_score(score_temp)
 
         # Flipping to add everything on the board
