@@ -1,5 +1,3 @@
-from pygame.locals import *
-from random import randint
 from control.constantes import *
 import time
 import pygame
@@ -15,7 +13,6 @@ score_temp = 0
 for i in range(0, 1000):
     x_snake_position.append(-100)
     y_snake_position.append(-100)
-
 
 # Function to check if the snake hits something like fruits or itself
 
@@ -43,11 +40,23 @@ def life():
 def bonus():
     pass
 
+=======
+def collision(x_coordinates_1,y_coordinates_1,x_coordinates_2,y_coordinates_2, size_snake, size_fruit):
 
-pygame.init()
+    if ((x_coordinates_1 + size_snake >= x_coordinates_2) or (x_coordinates_1 >= x_coordinates_2)) and x_coordinates_1 <= x_coordinates_2 + size_fruit:
+        if ((y_coordinates_1 >= y_coordinates_2) or (y_coordinates_1 + size_snake >= y_coordinates_2)) and y_coordinates_1 <= y_coordinates_2 + size_fruit:
+            return True
+        return False
 
-# Creating the main window and giving it a name
+# Function to display the player's score
 
+def disp_score(score):
+    
+    font = pygame.font.SysFont(None, 25)
+    text = font.render("Score: "+str(score), True, (0, 0, 0))
+    window.blit(text,(500,0))
+
+    
 window = pygame.display.set_mode((600, 600))
 window_rect = window.get_rect()
 pygame.display.set_caption("Snake")
@@ -187,9 +196,7 @@ while PLAYING:
     if MOVE_LEFT:
         x_snake_position[0] = x_snake_position[0] - STEP
         window.blit(cover, (0, 0))
-        window.blit(head, (x_snake_position[0], y_snake_position[0]))
-
-    # Calling the collision function to check if the snake hits the edges of the window
+# Calling the collision function to check if the snake hits the edges of the window
 
     if x_snake_position[0] < window_rect.left:
         pass
@@ -235,11 +242,9 @@ while PLAYING:
 
     pygame.display.flip()
 
-    # Delaying the game to make the snake move fluently
+    # Delaying the game to make the snake move fluentl
 
     time.sleep(SPEED / 1000)
-
-# Exiting the game if the main loop is done
 
 pygame.quit()
 exit()
