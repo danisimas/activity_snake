@@ -1,8 +1,7 @@
-PLAYING = True
 MOVE_UP = MOVE_DOWN = MOVE_RiGHT = MOVE_LEFT = MOVE_INIT = False
 
 # Other int variables
 STEP = 23
 SCORE = 0
-SNAKE = 3
-SPEED = 80
+SNAKE = 2
+SPEED = 90
