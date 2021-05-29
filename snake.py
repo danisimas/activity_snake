@@ -1,142 +1,245 @@
-import pygame
-import random
 from pygame.locals import *
+from random import randint
+from control.constantes import *
+import time
+import pygame
 
-RUN = True
+# Lists to store the coordinates of the snake's body parts
 
-move_Up = move_Down = move_Right = move_Left = move_init = False
+x_snake_position = [0]
+y_snake_position = [0]
+score_temp = 0
 
-SCORE = 0
-length = 2
-speed = 75
-
-x_snake = [0]
-y_snake = [0]
+# Increasing the size of the list to potentially have 1000 sections for the snake
 
 for i in range(0, 1000):
-    x_snake.append(-1000)
-    y_snake.append(-100)
+    x_snake_position.append(-100)
+    y_snake_position.append(-100)
 
 
-# Helper functions
-def on_grid_random():
-    x = random.randint(0, 59)
-    y = random.randint(0, 59)
-    return (x * 10, 
-            y * 10)
+# Function to check if the snake hits something like fruits or itself
+
+def collision(x_coordinates_1, y_coordinates_1, x_coordinates_2, y_coordinates_2, size_snake, size_fruit):
+    if ((x_coordinates_1 + size_snake >= x_coordinates_2) or (
+            x_coordinates_1 >= x_coordinates_2)) and x_coordinates_1 <= x_coordinates_2 + size_fruit:
+        if ((y_coordinates_1 >= y_coordinates_2) or (
+                y_coordinates_1 + size_snake >= y_coordinates_2)) and y_coordinates_1 <= y_coordinates_2 + size_fruit:
+            return True
+        return False
 
 
-def collision(c1, c2):
-    return (c1[0] == c2[0]) and (c1[1] == c2[1])
+# Function to display the player's score
+
+def text_score(score_temp):
+    font = pygame.font.SysFont(None, 25)
+    text = font.render("Score: " + str(score_temp), True, (0, 0, 0))
+    window.blit(text, (500, 0))
 
 
-# Macro definition for snake movement.
+def life():
+    pass
+
+
+def bonus():
+    pass
+
+
 pygame.init()
-screen = pygame.display.set_mode((600, 600))
-pygame.display.set_caption('Snake')
 
-cover = pygame.Surface(screen.get_size())
+# Creating the main window and giving it a name
+
+window = pygame.display.set_mode((600, 600))
+window_rect = window.get_rect()
+pygame.display.set_caption("Snake")
+
+# Blitting an image on the main window
+
+cover = pygame.Surface(window.get_size())
 cover = cover.convert()
-cover.fill((250, 250, 250))
-screen.blit(cover, (0, 0))
+cover.fill((144, 238, 144))
+window.blit(cover, (0, 0))
+
+# Refreshing the screen to display everything
 
 pygame.display.flip()
 
-head = pygame.image.load('assets/body_snake_arthur.png').convert_alpha()
-head = pygame.transform.scale(head, (35, 35))
-apple_pos = on_grid_random()
-apple = pygame.Surface((10, 10))
-apple.fill((255, 0, 0))
+# Loading the main images on the game window
 
+head = pygame.image.load("assets/body_snake_arthur.png").convert_alpha()  # The head
+head = pygame.transform.scale(head, (25, 25))
 
-position_snake = head.get_rect()
+body_part_1 = pygame.image.load("assets/body_snake_arthur.png").convert_alpha()  # The body
+body_part_1 = pygame.transform.scale(body_part_1, (25, 25))
 
-x_snake[0] = position_snake.x
-y_snake[0] = position_snake.y
-my_direction = 3
+fruit = pygame.image.load("assets/apple_arthur.png").convert_alpha()  # The fruit
+fruit = pygame.transform.scale(fruit, (25, 25))
 
-clock = pygame.time.Clock()
+# Storing the head and fruit's coordinates in variables
 
-font = pygame.font.Font('freesansbold.ttf', 18)
-score = 0
+position_1 = head.get_rect()
+position_fruit = fruit.get_rect()
 
-game_over = False
-while not game_over:
-    clock.tick(10)
+# Storing the variables in the list variables created before
+
+x_snake_position[0] = position_1.x
+y_snake_position[0] = position_1.y
+
+# Giving random coordinates to the first fruit of the game
+
+position_fruit.x = randint(2, 10) * STEP
+position_fruit.y = randint(2, 10) * STEP
+
+# Main loop for the game
+
+while PLAYING:
+
+    # Collecting all the events
+
     for event in pygame.event.get():
-        if event.type == QUIT:
-            pygame.quit()
-            exit()
 
-        if event.type == KEYDOWN:
-            if event.key == K_UP and my_direction != DOWN:
-                my_direction = UP
-            if event.key == K_DOWN and my_direction != UP:
-                my_direction = DOWN
-            if event.key == K_LEFT and my_direction != RIGHT:
-                my_direction = LEFT
-            if event.key == K_RIGHT and my_direction != LEFT:
-                my_direction = RIGHT
+        # Checking if the user quits the game
 
-    '''if collision(snake[0], apple_pos):
-        apple_pos = on_grid_random()
-        snake.append((0, 0))
-        score = score + 1
+        if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
+            PLAYING = False
 
-    # Check if snake collided with boundaries
-    if snake[0][0] == 600 or snake[0][1] == 600 or snake[0][0] < 0 or snake[0][1] < 0:
-        game_over = True
-        break
+        # Checking if the user presses a key
 
-    # Check if the snake has hit itself
-    for i in range(1, len(snake) - 1):
-        if snake[0][0] == snake[i][0] and snake[0][1] == snake[i][1]:
-            game_over = True
-            break
+        if event.type == pygame.KEYDOWN:
 
-    if game_over:
-        break
+            if event.key == pygame.K_UP:
 
-    for i in range(len(snake) - 1, 0, -1):
-        snake[i] = (snake[i - 1][0], snake[i - 1][1])
-'''
-    ''' Actually make the snake move.
-    if my_direction == UP:
-        snake[0] = (snake[0][0], snake[0][1] - 10)
-    if my_direction == DOWN:
-        snake[0] = (snake[0][0], snake[0][1] + 10)
-    if my_direction == RIGHT:
-        snake[0] = (snake[0][0] + 10, snake[0][1])
-    if my_direction == LEFT:
-        snake[0] = (snake[0][0] - 10, snake[0][1])
+                if MOVE_UP == False and MOVE_INIT == True:
+                    if MOVE_DOWN == True:
+                        MOVE_UP = False
 
-    screen.fill((0, 0, 0))
-    screen.blit(apple, apple_pos)
+                    else:
 
-    for x in range(0, 600, 10):  # Draw vertical lines
-        pygame.draw.line(screen, (40, 40, 40), (x, 0), (x, 600))
-    for y in range(0, 600, 10):  # Draw vertical lines
-        pygame.draw.line(screen, (40, 40, 40), (0, y), (600, y))
+                        MOVE_DOWN = MOVE_RiGHT = MOVE_LEFT = False
+                        MOVE_UP = MOVE_INIT = True
 
-    score_font = font.render('Score: %s' % (score), True, (255, 255, 255))
-    score_rect = score_font.get_rect()
-    score_rect.topleft = (600 - 120, 10)
-    screen.blit(score_font, score_rect)
-'''
-    screen.blit(head, (0, 0))
+            if event.key == pygame.K_DOWN:
 
-    pygame.display.update()
+                if MOVE_DOWN == False:
+                    if MOVE_UP == True:
+                        MOVE_DOWN = False
 
-while True:
-    game_over_font = pygame.font.Font('freesansbold.ttf', 75)
-    game_over_screen = game_over_font.render('Game Over', True, (255, 255, 255))
-    game_over_rect = game_over_screen.get_rect()
-    game_over_rect.midtop = (600 / 2, 10)
-    screen.blit(game_over_screen, game_over_rect)
-    pygame.display.update()
-    pygame.time.wait(500)
-    while True:
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                pygame.quit()
-                exit()
+                    else:
+
+                        MOVE_RiGHT = MOVE_LEFT = MOVE_UP = False
+                        MOVE_DOWN = MOVE_INIT = True
+
+            if event.key == pygame.K_RIGHT:
+
+                if MOVE_RiGHT == False:
+                    if MOVE_LEFT == True:
+                        MOVE_RiGHT = False
+
+                    else:
+
+                        MOVE_LEFT = MOVE_UP = MOVE_DOWN = False
+                        MOVE_RiGHT = MOVE_INIT = True
+
+            if event.key == pygame.K_LEFT:
+
+                if MOVE_LEFT == False:
+                    if MOVE_RiGHT == True:  # Empêchement d'aller dans la direction opposée
+                        MOVE_LEFT = False
+
+                    else:
+
+                        MOVE_RiGHT = MOVE_DOWN = MOVE_UP = False  # Changement de la variable de déplacement
+                        MOVE_LEFT = MOVE_INIT = True
+
+    window.blit(body_part_1, (-50, 50))
+    window.blit(head, (0, 0))
+
+    # Moving each part of the body by giving them new coordinates
+
+    for i in range(SNAKE - 1, 0, -1):
+        x_snake_position[i] = x_snake_position[(i - 1)]
+
+        y_snake_position[i] = y_snake_position[(i - 1)]
+
+    # Filling the window with white to erase the different parts of the snake
+
+    cover.fill((144, 238, 144))
+
+    for i in range(1, SNAKE):
+        cover.blit(body_part_1, (x_snake_position[i], y_snake_position[i]))
+
+    # Moving the snake in a certain direction if the user presses a key
+
+    if MOVE_UP:
+        y_snake_position[0] = y_snake_position[0] - STEP
+        window.blit(cover, (0, 0))
+        window.blit(head, (x_snake_position[0], y_snake_position[0]))
+
+    if MOVE_DOWN:
+        y_snake_position[0] = y_snake_position[0] + STEP
+        window.blit(cover, (0, 0))
+        window.blit(head, (x_snake_position[0], y_snake_position[0]))
+
+    if MOVE_RiGHT:
+        x_snake_position[0] = x_snake_position[0] + STEP
+        window.blit(cover, (0, 0))
+        window.blit(head, (x_snake_position[0], y_snake_position[0]))
+
+    if MOVE_LEFT:
+        x_snake_position[0] = x_snake_position[0] - STEP
+        window.blit(cover, (0, 0))
+        window.blit(head, (x_snake_position[0], y_snake_position[0]))
+
+    # Calling the collision function to check if the snake hits the edges of the window
+
+    if x_snake_position[0] < window_rect.left:
+        pass
+
+    if x_snake_position[0] + 35 > window_rect.right:
+        pass
+
+    if y_snake_position[0] < window_rect.top:
+        pass
+
+    if y_snake_position[0] + 35 > window_rect.bottom:
+        pass
+
+    # Calling the collision function to check if the snake hits itself
+
+    if collision(x_snake_position[0], y_snake_position[0], x_snake_position[i], y_snake_position[i], 0, 0) and (
+            MOVE_INIT == True):
+        PLAYING = False
+
+    window.blit(fruit, position_fruit)
+
+    if collision(x_snake_position[0], y_snake_position[0], position_fruit.x, position_fruit.y, 35, 25):
+
+        position_fruit.x = randint(1, 20) * STEP
+        position_fruit.y = randint(1, 20) * STEP
+
+        for j in range(0, SNAKE):
+
+            while collision(position_fruit.x, position_fruit.y, x_snake_position[j], y_snake_position[j], 35, 25):
+                position_fruit.x = randint(1, 20) * STEP
+                position_fruit.y = randint(1, 20) * STEP
+
+        # Increasing the size of the snake and the score
+
+        SNAKE = SNAKE + 1
+        score_temp = score_temp + 1
+
+    # Displaying the score
+
+    text_score(score_temp)
+
+    # Flipping to add everything on the board
+
+    pygame.display.flip()
+
+    # Delaying the game to make the snake move fluently
+
+    time.sleep(SPEED / 1000)
+
+# Exiting the game if the main loop is done
+
+pygame.quit()
+exit()
