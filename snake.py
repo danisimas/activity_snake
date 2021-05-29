@@ -66,6 +66,12 @@ pygame.display.flip()
 
 head = pygame.image.load("assets/body_snake_arthur.png").convert_alpha()  # The head
 head = pygame.transform.scale(head, (25, 25))
+head1 = pygame.image.load("assets/head_left.png").convert_alpha()
+head1 = pygame.transform.scale(head1, (30, 30))
+head2 = pygame.image.load("assets/head1_up.png").convert_alpha()
+head2 = pygame.transform.scale(head2, (30, 30))
+head3 = pygame.image.load("assets/head_down.png").convert_alpha()
+head3 = pygame.transform.scale(head3, (30, 30))
 
 body_part_1 = pygame.image.load("assets/body_snake_arthur.png").convert_alpha()  # The body
 body_part_1 = pygame.transform.scale(body_part_1, (25, 25))
@@ -171,12 +177,12 @@ def init_snake():
         if move_up:
             y_snake_position[0] = y_snake_position[0] - STEP
             window.blit(cover, (0, 0))
-            window.blit(head, (x_snake_position[0], y_snake_position[0]))
+            window.blit(head2, (x_snake_position[0], y_snake_position[0]))
 
         if move_down:
             y_snake_position[0] = y_snake_position[0] + STEP
             window.blit(cover, (0, 0))
-            window.blit(head, (x_snake_position[0], y_snake_position[0]))
+            window.blit(head3, (x_snake_position[0], y_snake_position[0]))
 
         if move_right:
             x_snake_position[0] = x_snake_position[0] + STEP
@@ -186,6 +192,7 @@ def init_snake():
         if move_left:
             x_snake_position[0] = x_snake_position[0] - STEP
             window.blit(cover, (0, 0))
+            window.blit(head1, (x_snake_position[0], y_snake_position[0]))
         # Calling the collision function to check if the snake hits the edges of the window
         if x_snake_position[0] < window_rect.left:
             game_over()
