@@ -196,11 +196,11 @@ def init_snake():
             window.blit(head_left, (x_snake_position[0], y_snake_position[0]))
 
         # Calling the collision function to check if the snake hits the edges of the window
-        if x_snake_position[0] < (window_rect.left)-5:
+        if x_snake_position[0] < window_rect.left:
             game_over()
             playing = False
 
-        if x_snake_position[0] + 35 > window_rect.right + 5:
+        if x_snake_position[0] + 35 > window_rect.right:
             game_over()
             playing = False
 
@@ -208,7 +208,7 @@ def init_snake():
             game_over()
             playing = False
 
-        if y_snake_position[0] + 35 > window_rect.bottom + 5:
+        if y_snake_position[0] + 35 > window_rect.bottom:
             game_over()
             playing = False
         # Calling the collision function to check if the snake hits itself
