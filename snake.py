@@ -64,33 +64,34 @@ pygame.display.flip()
 
 # Loading the main images on the game window
 
-head = pygame.image.load("assets/body_snake_arthur.png").convert_alpha()  # The head
-head = pygame.transform.scale(head, (25, 25))
-head1 = pygame.image.load("assets/head_left.png").convert_alpha()
-head1 = pygame.transform.scale(head1, (30, 30))
-head2 = pygame.image.load("assets/head1_up.png").convert_alpha()
-head2 = pygame.transform.scale(head2, (30, 30))
-head3 = pygame.image.load("assets/head_down.png").convert_alpha()
-head3 = pygame.transform.scale(head3, (30, 30))
+head_up = pygame.image.load("assets/head.png").convert_alpha()  # The head
+head_up = pygame.transform.scale(head_up, (30, 30))
+head_left = pygame.image.load("assets/head_left.png").convert_alpha()
+head_left = pygame.transform.scale(head_left, (30, 30))
+head_down = pygame.image.load("assets/head_down.png").convert_alpha()
+head_down = pygame.transform.scale(head_down, (30, 30))
 
-body_part_1 = pygame.image.load("assets/body_snake_arthur.png").convert_alpha()  # The body
+head_right = pygame.image.load("assets/head_rigth.png").convert_alpha()
+head_right = pygame.transform.scale(head_right, (30, 30))
+
+body_part_1 = pygame.image.load("assets/body.png").convert_alpha()  # The body
 body_part_1 = pygame.transform.scale(body_part_1, (25, 25))
 
-fruit = pygame.image.load("assets/apple_arthur.png").convert_alpha()  # The fruit
+fruit = pygame.image.load("assets/apple.png").convert_alpha()  # The fruit
 fruit = pygame.transform.scale(fruit, (25, 25))
 
-wall = pygame.image.load("assets/wall-pixe-art-1.png.png").convert_alpha()
+wall = pygame.image.load("assets/wall.png").convert_alpha()
 wall = pygame.transform.scale(wall, (25, 50))
 
 # Storing the head and fruit's coordinates in variables
 
-position_1 = head.get_rect()
+position_1 = head_up.get_rect()
 position_fruit = fruit.get_rect()
 
 # Storing the variables in the list variables created before
 
-x_snake_position[0] = position_1.x
-y_snake_position[0] = position_1.y
+x_snake_position[0] = position_1.centerx
+y_snake_position[0] = position_1.centery
 
 # Giving random coordinates to the first fruit of the game
 
@@ -156,8 +157,8 @@ def init_snake():
                             move_right = move_down = move_up = False
                             move_left = move_init = True
 
-        window.blit(body_part_1, (0, 0))
-        window.blit(head, (-250, 250))
+        window.blit(body_part_1, (75, 75))
+        window.blit(head_up, (-250, 250))
 
         # Moving each part of the body by giving them new coordinates
         for i in range(snake - 1, 0, -1):
@@ -177,22 +178,23 @@ def init_snake():
         if move_up:
             y_snake_position[0] = y_snake_position[0] - STEP
             window.blit(cover, (0, 0))
-            window.blit(head2, (x_snake_position[0], y_snake_position[0]))
+            window.blit(head_up, (x_snake_position[0], y_snake_position[0]))
 
         if move_down:
             y_snake_position[0] = y_snake_position[0] + STEP
             window.blit(cover, (0, 0))
-            window.blit(head3, (x_snake_position[0], y_snake_position[0]))
+            window.blit(head_down, (x_snake_position[0], y_snake_position[0]))
 
         if move_right:
             x_snake_position[0] = x_snake_position[0] + STEP
             window.blit(cover, (0, 0))
-            window.blit(head, (x_snake_position[0], y_snake_position[0]))
+            window.blit(head_right, (x_snake_position[0], y_snake_position[0]))
 
         if move_left:
             x_snake_position[0] = x_snake_position[0] - STEP
             window.blit(cover, (0, 0))
-            window.blit(head1, (x_snake_position[0], y_snake_position[0]))
+            window.blit(head_left, (x_snake_position[0], y_snake_position[0]))
+
         # Calling the collision function to check if the snake hits the edges of the window
         if x_snake_position[0] < window_rect.left:
             game_over()
@@ -211,13 +213,13 @@ def init_snake():
             playing = False
         # Calling the collision function to check if the snake hits itself
 
-        if collision(x_snake_position[0], y_snake_position[0], x_snake_position[i], y_snake_position[i], 0, 0) and (
+        if collision(x_snake_position[0], y_snake_position[0], x_snake_position[i], y_snake_position[i], -1, -1) and (
                 MOVE_INIT == True):
             playing = False
 
         window.blit(fruit, position_fruit)
 
-        if collision(x_snake_position[0], y_snake_position[0], position_fruit.x, position_fruit.y, 35, 25):
+        if collision(x_snake_position[0], y_snake_position[0], position_fruit.x, position_fruit.y, 20, 15):
 
             position_fruit.x = randint(1, 20) * STEP
             position_fruit.y = randint(1, 20) * STEP
@@ -243,5 +245,6 @@ def init_snake():
 
     pygame.quit()
     sys.exit()
+
 
 init_snake()
