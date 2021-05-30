@@ -1,6 +1,7 @@
 import sys
 
 from control.constantes import *
+from view.game_over import *
 import time
 from random import *
 import pygame
@@ -11,46 +12,12 @@ pygame.init()
 
 x_snake_position = [0]
 y_snake_position = [0]
-
-
-for i in range(0, 1000):
-    x_snake_position.append(-100)
-    y_snake_position.append(-100)
-
-
-def collision(x_coordinates_1, y_coordinates_1, x_coordinates_2, y_coordinates_2, size_snake, size_fruit):
-    if ((x_coordinates_1 + size_snake >= x_coordinates_2) or (
-            x_coordinates_1 >= x_coordinates_2)) and x_coordinates_1 <= x_coordinates_2 + size_fruit:
-        if ((y_coordinates_1 >= y_coordinates_2) or (
-                y_coordinates_1 + size_snake >= y_coordinates_2)) and y_coordinates_1 <= y_coordinates_2 + size_fruit:
-            return True
-        return False
-
-
-def text_score(score_temp):
-    font = pygame.font.SysFont(None, 25)
-    text = font.render("Score: " + str(score_temp), True, (0, 0, 0))
-    window.blit(text, (500, 0))
-
-
-def life():
-    pass
-
-
-def bonus():
-    pass
-
-
-def game_over():
-    window.fill((144, 238, 144))
-    font = pygame.font.SysFont(None, 25)
-    text = font.render("GAME OVER", True, (0, 0, 0))
-    window.blit(text, (500, 500))
-
+heart_position = [0]
 
 window = pygame.display.set_mode((600, 600))
 window_rect = window.get_rect()
 pygame.display.set_caption("Snake")
+
 
 # Blitting an image on the main window
 cover = pygame.Surface(window.get_size())
@@ -70,28 +37,27 @@ head_left = pygame.image.load("assets/head_left.png").convert_alpha()
 head_left = pygame.transform.scale(head_left, (30, 30))
 head_down = pygame.image.load("assets/head_down.png").convert_alpha()
 head_down = pygame.transform.scale(head_down, (30, 30))
-
 head_right = pygame.image.load("assets/head_rigth.png").convert_alpha()
 head_right = pygame.transform.scale(head_right, (30, 30))
 
+
 body_part_1 = pygame.image.load("assets/body.png").convert_alpha()  # The body
-body_part_1 = pygame.transform.scale(body_part_1, (25, 25))
+body_part_1 = pygame.transform.scale(body_part_1, (30, 30))
 
 fruit = pygame.image.load("assets/apple.png").convert_alpha()  # The fruit
-fruit = pygame.transform.scale(fruit, (25, 25))
+fruit = pygame.transform.scale(fruit, (30, 30))
 
 wall = pygame.image.load("assets/wall.png").convert_alpha()
 wall = pygame.transform.scale(wall, (25, 50))
 
 # Storing the head and fruit's coordinates in variables
 
-position_1 = head_up.get_rect()
+position_1 = head_down.get_rect()
 position_fruit = fruit.get_rect()
 
 # Storing the variables in the list variables created before
-
-x_snake_position[0] = position_1.centerx
-y_snake_position[0] = position_1.centery
+x_snake_position[0] = position_1.x + STEP
+y_snake_position[0] = position_1.y + STEP
 
 # Giving random coordinates to the first fruit of the game
 
@@ -99,8 +65,28 @@ position_fruit.x = randint(2, 10) * STEP
 position_fruit.y = randint(2, 10) * STEP
 
 
+for i in range(0, 1000):
+    x_snake_position.append(-100)
+    y_snake_position.append(-100)
+
+
+def collision(x_coordinates_1, y_coordinates_1, x_coordinates_2, y_coordinates_2, size_snake, size_fruit):
+    if ((x_coordinates_1 + size_snake >= x_coordinates_2) or (
+            x_coordinates_1 >= x_coordinates_2)) and x_coordinates_1 <= x_coordinates_2 + size_fruit:
+        if ((y_coordinates_1 >= y_coordinates_2) or (
+                y_coordinates_1 + size_snake >= y_coordinates_2)) and y_coordinates_1 <= y_coordinates_2 + size_fruit:
+            return True
+        return False
+
+
+def text_score(score_temp):
+    font = pygame.font.Font("assets/Vermin Vibes 1989.ttf", 25)
+    text = font.render("Score: " + str(score_temp), True, (0, 0, 0))
+    window.blit(text, (500, 0))
+
 # Create Walls
 def walls():
+
     for i in range(34):
         wall_x = pygame.transform.rotate(wall, 180)
         window.blit(wall, (-3+(i*18), 5))
@@ -157,9 +143,7 @@ def init_snake():
                             move_right = move_down = move_up = False
                             move_left = move_init = True
 
-        window.blit(body_part_1, (75, 75))
-        window.blit(head_up, (-250, 250))
-
+        window.blit(head_down, (90, 90))
         # Moving each part of the body by giving them new coordinates
         for i in range(snake - 1, 0, -1):
             x_snake_position[i] = x_snake_position[(i - 1)]
@@ -198,23 +182,18 @@ def init_snake():
         # Calling the collision function to check if the snake hits the edges of the window
         if x_snake_position[0] < window_rect.left:
             game_over()
-            playing = False
 
         if x_snake_position[0] + 35 > window_rect.right:
             game_over()
-            playing = False
 
-        if y_snake_position[0] < window_rect.top:
+        if y_snake_position[0] <= window_rect.top:
             game_over()
-            playing = False
 
-        if y_snake_position[0] + 35 > window_rect.bottom:
+        if y_snake_position[0] + 35 >= window_rect.bottom:
             game_over()
-            playing = False
-        # Calling the collision function to check if the snake hits itself
 
         if collision(x_snake_position[0], y_snake_position[0], x_snake_position[i], y_snake_position[i], -1, -1) and (
-                MOVE_INIT == True):
+                    MOVE_INIT == True):
             playing = False
 
         window.blit(fruit, position_fruit)
@@ -226,7 +205,7 @@ def init_snake():
 
             for j in range(0, snake):
 
-                while collision(position_fruit.x, position_fruit.y, x_snake_position[j], y_snake_position[j], 35, 25):
+                while collision(position_fruit.x, position_fruit.y, x_snake_position[j], y_snake_position[j], 20, 15):
                     position_fruit.x = randint(1, 20) * STEP
                     position_fruit.y = randint(1, 20) * STEP
 
