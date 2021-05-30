@@ -7,9 +7,12 @@ pygame.init()
 window = pygame.display.set_mode((600, 600))
 window_rect = window.get_rect()
 pygame.display.set_caption("Snake")
+click = False
 
 
-def game_over():
+def menu():
+
+
     window.fill((144, 238, 144))
     font = pygame.font.Font("assets/Vermin Vibes 1989.ttf", 48)
     font_2 = pygame.font.Font("assets/Vermin Vibes 1989.ttf", 38)

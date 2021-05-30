@@ -1,7 +1,6 @@
 import sys
-
 from control.constantes import *
-from view.game_over import *
+from game_over  import *
 import time
 from random import *
 import pygame
@@ -11,8 +10,8 @@ import pygame
 # Game over: https://freesound.org/people/ScreamStudio/sounds/412168/
 
 # Sound effect
-apple_sound = pygame.mixer.Sound('assets/Apple-crunch.wav')
-death_sound = pygame.mixer.Sound('assets/death sound.wav')
+# apple_sound = pygame.mixer.Sound('assets/Apple-crunch.wav')
+# death_sound = pygame.mixer.Sound('assets/death sound.wav')
 
 # Lists to store the coordinates of the snake's body parts
 
@@ -20,7 +19,6 @@ pygame.init()
 
 x_snake_position = [0]
 y_snake_position = [0]
-heart_position = [0]
 
 window = pygame.display.set_mode((600, 600))
 window_rect = window.get_rect()
@@ -64,8 +62,8 @@ position_1 = head_down.get_rect()
 position_fruit = fruit.get_rect()
 
 # Storing the variables in the list variables created before
-x_snake_position[0] = position_1.x + STEP
-y_snake_position[0] = position_1.y + STEP
+x_snake_position[0] = 250
+y_snake_position[0] = 250
 
 # Giving random coordinates to the first fruit of the game
 
@@ -92,6 +90,7 @@ def text_score(score_temp):
     text = font.render("Score: " + str(score_temp), True, (0, 0, 0))
     window.blit(text, (500, 0))
 
+
 # Create Walls
 def walls():
 
@@ -106,7 +105,7 @@ def walls():
         window.blit(wall_y_2, (564, 27 + (j * 18)))
 
 
-def init_snake():
+def main():
     playing = True
     score_temp = 0
     snake = SNAKE
@@ -150,7 +149,7 @@ def init_snake():
                         else:
                             move_right = move_down = move_up = False
                             move_left = move_init = True
-        window.blit(head_down, (90, 90))
+
         # Moving each part of the body by giving them new coordinates
         for i in range(snake - 1, 0, -1):
             x_snake_position[i] = x_snake_position[(i - 1)]
@@ -188,16 +187,27 @@ def init_snake():
 
         # Calling the collision function to check if the snake hits the edges of the window
         if x_snake_position[0] < window_rect.left:
-            game_over()
+            game_over(score_temp)
+            set_click()
+            x_snake_position[0] = 250
+            y_snake_position[0] = 250
 
         if x_snake_position[0] + 35 > window_rect.right:
-            game_over()
+            game_over(score_temp)
+            set_click()
+            x_snake_position[0] = 250
+            y_snake_position[0] = 250
 
         if y_snake_position[0] <= window_rect.top:
-            game_over()
+            game_over(score_temp)
+            set_click()
+            x_snake_position[0] = 250
+            y_snake_position[0] = 250
 
         if y_snake_position[0] + 35 >= window_rect.bottom:
-            game_over()
+            x_snake_position[0] = 250
+            y_snake_position[0] = 250
+            game_over(score_temp)
 
         if collision(x_snake_position[0], y_snake_position[0], x_snake_position[i], y_snake_position[i], -1,
                      -1) and (
@@ -220,13 +230,10 @@ def init_snake():
             # Increasing the size of the snake and the score
             snake = snake + 1
             score_temp = score_temp + 1
-            apple_sound.play()
+            # apple_sound.play()
         # Displaying the score
         walls()
         text_score(score_temp)
-
-
-        # Flipping to add everything on the board
         pygame.display.flip()
         # Delaying the game to make the snake move fluentl
         time.sleep(SPEED / 1000)
@@ -234,5 +241,5 @@ def init_snake():
     sys.exit()
 
 
-init_snake()
-
+if __name__ == '__main__':
+    main()
