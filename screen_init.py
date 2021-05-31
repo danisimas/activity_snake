@@ -9,7 +9,7 @@ pygame.init()
 window = pygame.display.set_mode((600, 600))
 window_rect = window.get_rect()
 pygame.display.set_caption("Snake")
-image = pygame.image.load("assets/1.png").convert_alpha()
+image = pygame.image.load("assets/arthur_santos_init-screen.png").convert_alpha()
 image = pygame.transform.scale(image, (600, 600))
 
 

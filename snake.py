@@ -30,19 +30,19 @@ pygame.display.flip()
 
 
 # Loading the main images on the game window
-head_up = pygame.image.load("assets/head.png").convert_alpha()  # The head
+head_up = pygame.image.load("assets/arthur_santos_head_snake_up.png").convert_alpha()  # The head
 head_up = pygame.transform.scale(head_up, (30, 30))
-head_left = pygame.image.load("assets/head_left.png").convert_alpha()
+head_left = pygame.image.load("assets/arthur_santos_head_snake_left.png").convert_alpha()
 head_left = pygame.transform.scale(head_left, (30, 30))
-head_down = pygame.image.load("assets/head_down.png").convert_alpha()
+head_down = pygame.image.load("assets/arthur_santos_head_snake_down.png").convert_alpha()
 head_down = pygame.transform.scale(head_down, (30, 30))
 head_right = pygame.image.load("assets/head_right.png").convert_alpha()
 head_right = pygame.transform.scale(head_right, (30, 30))
-body_part_1 = pygame.image.load("assets/body.png").convert_alpha()  # The body
+body_part_1 = pygame.image.load("assets/arthur_santos_body.png").convert_alpha()  # The body
 body_part_1 = pygame.transform.scale(body_part_1, (30, 30))
-fruit = pygame.image.load("assets/apple.png").convert_alpha()  # The fruit
+fruit = pygame.image.load("assets/arthur_santos_apple.png").convert_alpha()  # The fruit
 fruit = pygame.transform.scale(fruit, (30, 30))
-wall = pygame.image.load("assets/wall.png").convert_alpha()
+wall = pygame.image.load("assets/arthur_santos_wall.png").convert_alpha()
 wall = pygame.transform.scale(wall, (25, 50))
 
 
