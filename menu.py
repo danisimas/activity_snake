@@ -33,13 +33,12 @@ def menu():
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if text_1_rect.collidepoint(pos_mouse):
-                        snake.main()
-                        click = True
-
+                    snake.main()
+                    click = True
                 if text_2_rect.collidepoint(pos_mouse):
                     credits.main()
                     click = True
-
+                    pygame.display.update()
                 if text_3_rect.collidepoint(pos_mouse):
                     pygame.quit()
                     sys.exit()

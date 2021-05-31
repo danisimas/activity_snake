@@ -1,6 +1,8 @@
 import sys
+
+import game_over
 from control.constantes import *
-from game_over  import *
+from game_over import *
 import time
 from random import *
 import pygame
@@ -25,7 +27,6 @@ window_rect = window.get_rect()
 pygame.display.set_caption("Snake")
 
 
-# Blitting an image on the main window
 cover = pygame.Surface(window.get_size())
 cover = cover.convert()
 cover.fill((144, 238, 144))
@@ -150,10 +151,12 @@ def main():
                             move_right = move_down = move_up = False
                             move_left = move_init = True
 
+        window.fill((144, 238, 144))
+        window.blit(head_up, (250, 250))
+
         # Moving each part of the body by giving them new coordinates
         for i in range(snake - 1, 0, -1):
             x_snake_position[i] = x_snake_position[(i - 1)]
-
             y_snake_position[i] = y_snake_position[(i - 1)]
 
         # Filling the window with white to erase the different parts of the snake
