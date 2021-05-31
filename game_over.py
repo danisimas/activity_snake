@@ -14,7 +14,8 @@ click = False
 
 
 def game_over(score):
-    click = False
+    global click
+    flag = 0
     while not click:
         window.fill((144, 238, 144))
         font = pygame.font.Font("assets/Vermin Vibes 1989.ttf", 48)
@@ -31,17 +32,21 @@ def game_over(score):
         text_1_rect.center = (300, 250)
         text_2_rect.center = (300, 350)
         text_3_rect.center = (300, 450)
-
+        if flag == 0:
+            death_sound = pygame.mixer.Sound('assets/death sound.wav')
+            death_sound.set_volume(0.1)
+            death_sound.play()
+            flag = 1
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     menu.menu()
                     click = True
 
-        window.blit(text_1, text_1_rect)
-        window.blit(text_2, text_2_rect)
-        window.blit(text_3, text_3_rect)
-        pygame.display.update()
+                window.blit(text_1, text_1_rect)
+                window.blit(text_2, text_2_rect)
+                window.blit(text_3, text_3_rect)
+                pygame.display.update()
 
 
 def set_click():

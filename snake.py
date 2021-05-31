@@ -11,9 +11,8 @@ import pygame
 # Apple: https://freesound.org/people/AlienXXX/sounds/132504/
 # Game over: https://freesound.org/people/ScreamStudio/sounds/412168/
 
-# Sound effect
-# apple_sound = pygame.mixer.Sound('assets/Apple-crunch.wav')
-# death_sound = pygame.mixer.Sound('assets/death sound.wav')
+
+
 
 # Lists to store the coordinates of the snake's body parts
 
@@ -115,8 +114,12 @@ def main():
     move_right = MOVE_RiGHT
     move_left = MOVE_LEFT
     move_init = MOVE_INIT
+    # Sound effect
+    apple_sound = pygame.mixer.Sound('assets/Apple-crunch.wav')
+    apple_sound.set_volume(0.1)
 
     while playing:
+        print(x_snake_position, y_snake_position)
         for event in pygame.event.get():
             if event.type == pygame.QUIT or \
                     (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
@@ -238,7 +241,7 @@ def main():
             # Increasing the size of the snake and the score
             snake = snake + 1
             score_temp = score_temp + 1
-            # apple_sound.play()
+            apple_sound.play()
         # Displaying the score
         walls()
         text_score(score_temp)
