@@ -36,7 +36,7 @@ head_left = pygame.image.load("assets/head_left.png").convert_alpha()
 head_left = pygame.transform.scale(head_left, (30, 30))
 head_down = pygame.image.load("assets/head_down.png").convert_alpha()
 head_down = pygame.transform.scale(head_down, (30, 30))
-head_right = pygame.image.load("assets/head_rigth.png").convert_alpha()
+head_right = pygame.image.load("assets/head_right.png").convert_alpha()
 head_right = pygame.transform.scale(head_right, (30, 30))
 body_part_1 = pygame.image.load("assets/body.png").convert_alpha()  # The body
 body_part_1 = pygame.transform.scale(body_part_1, (30, 30))
@@ -229,7 +229,7 @@ def main():
         walls()
         text_score(score_temp)
         pygame.display.flip()
-        # Delaying the game to make the snake move fluentl
+        # Delaying the game to make the snake move fluent
         time.sleep(SPEED / 1000)
     pygame.quit()
     sys.exit()
