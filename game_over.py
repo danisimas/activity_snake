@@ -2,16 +2,17 @@ import sys
 import time
 import pygame
 import snake
+import menu
 
 pygame.init()
 window = pygame.display.set_mode((600, 600))
 window_rect = window.get_rect()
 pygame.display.set_caption("Snake")
 score = 0
-
+click = False
 
 def game_over(score):
-    click = False
+    global click
     while not click:
         window.fill((144, 238, 144))
         font = pygame.font.Font("assets/Vermin Vibes 1989.ttf", 48)
@@ -32,9 +33,9 @@ def game_over(score):
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    menu()
+                    menu.menu()
                     click = True
-
+        click = False
         window.blit(text_1, text_1_rect)
         window.blit(text_2, text_2_rect)
         window.blit(text_3, text_3_rect)
@@ -42,10 +43,9 @@ def game_over(score):
 
 
 def set_click():
+    global click
     click = False
 
 
 if __name__ == '__main__':
     game_over(score)
-
-

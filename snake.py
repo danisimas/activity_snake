@@ -205,14 +205,19 @@ def main():
             y_snake_position[0] = 250
 
         if y_snake_position[0] + 35 >= window_rect.bottom:
+            game_over(score_temp)
+            set_click()
             x_snake_position[0] = 250
             y_snake_position[0] = 250
-            game_over(score_temp)
 
         if collision(x_snake_position[0], y_snake_position[0], x_snake_position[i], y_snake_position[i], -1,
                      -1) and (
                 MOVE_INIT == True):
-            playing = False
+            game_over(score_temp)
+            set_click()
+            x_snake_position[0] = 250
+            y_snake_position[0] = 250
+
         window.blit(fruit, position_fruit)
 
         if collision(x_snake_position[0], y_snake_position[0], position_fruit.x, position_fruit.y, 20, 15):
