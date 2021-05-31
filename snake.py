@@ -1,11 +1,11 @@
 import sys
-
 import game_over
 from control.constantes import *
 from game_over import *
 import time
 from random import *
 import pygame
+
 
 # Sound effects links
 # Apple: https://freesound.org/people/AlienXXX/sounds/132504/
@@ -14,26 +14,22 @@ import pygame
 
 # Lists to store the coordinates of the snake's body parts
 pygame.init()
-
 x_snake_position = [0]
 y_snake_position = [0]
-
 window = pygame.display.set_mode((600, 600))
 window_rect = window.get_rect()
 pygame.display.set_caption("Snake")
-
-
 cover = pygame.Surface(window.get_size())
 cover = cover.convert()
 cover.fill((144, 238, 144))
 window.blit(cover, (0, 0))
 
-# Refreshing the screen to display everything
 
+# Refreshing the screen to display everything
 pygame.display.flip()
 
-# Loading the main images on the game window
 
+# Loading the main images on the game window
 head_up = pygame.image.load("assets/head.png").convert_alpha()  # The head
 head_up = pygame.transform.scale(head_up, (30, 30))
 head_left = pygame.image.load("assets/head_left.png").convert_alpha()
@@ -42,19 +38,15 @@ head_down = pygame.image.load("assets/head_down.png").convert_alpha()
 head_down = pygame.transform.scale(head_down, (30, 30))
 head_right = pygame.image.load("assets/head_rigth.png").convert_alpha()
 head_right = pygame.transform.scale(head_right, (30, 30))
-
-
 body_part_1 = pygame.image.load("assets/body.png").convert_alpha()  # The body
 body_part_1 = pygame.transform.scale(body_part_1, (30, 30))
-
 fruit = pygame.image.load("assets/apple.png").convert_alpha()  # The fruit
 fruit = pygame.transform.scale(fruit, (30, 30))
-
 wall = pygame.image.load("assets/wall.png").convert_alpha()
 wall = pygame.transform.scale(wall, (25, 50))
 
-# Storing the head and fruit's coordinates in variables
 
+# Storing the head and fruit's coordinates in variables
 position_1 = head_down.get_rect()
 position_fruit = fruit.get_rect()
 
@@ -62,8 +54,8 @@ position_fruit = fruit.get_rect()
 x_snake_position[0] = 250
 y_snake_position[0] = 250
 
-# Giving random coordinates to the first fruit of the game
 
+# Giving random coordinates to the first fruit of the game
 position_fruit.x = randint(2, 10) * STEP
 position_fruit.y = randint(2, 10) * STEP
 
@@ -90,7 +82,6 @@ def text_score(score_temp):
 
 # Create Walls
 def walls():
-
     for i in range(34):
         wall_x = pygame.transform.rotate(wall, 180)
         window.blit(wall, (-3+(i*18), 5))
@@ -111,10 +102,10 @@ def main():
     move_right = MOVE_RiGHT
     move_left = MOVE_LEFT
     move_init = MOVE_INIT
+
     # Sound effect
     apple_sound = pygame.mixer.Sound('assets/Apple-crunch.wav')
     apple_sound.set_volume(0.1)
-
     while playing:
         for event in pygame.event.get():
             if event.type == pygame.QUIT or \
@@ -159,14 +150,12 @@ def main():
             y_snake_position[i] = y_snake_position[(i - 1)]
 
         # Filling the window with white to erase the different parts of the snake
-
         cover.fill((144, 238, 144))
 
         for i in range(1, snake):
             cover.blit(body_part_1, (x_snake_position[i], y_snake_position[i]))
 
         # Moving the snake in a certain direction if the user presses a key
-
         if move_up:
             y_snake_position[0] = y_snake_position[0] - STEP
             window.blit(cover, (0, 0))
