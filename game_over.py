@@ -33,7 +33,7 @@ def game_over(score):
         text_2_rect.center = (300, 350)
         text_3_rect.center = (300, 450)
         if flag == 0:
-            death_sound = pygame.mixer.Sound('assets/death sound.wav')
+            death_sound = pygame.mixer.Sound('assets/death_sound.wav')
             death_sound.set_volume(0.1)
             death_sound.play()
             flag = 1
