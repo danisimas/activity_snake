@@ -215,9 +215,8 @@ def main():
             game_over(score_temp)
             set_click()
 
-        if collision(x_snake_position[0], y_snake_position[0], x_snake_position[i], y_snake_position[i], -1,
-                     -1) and (
-                MOVE_INIT == True):
+        if collision(x_snake_position[0], y_snake_position[0], x_snake_position[i], y_snake_position[i], 0,
+                     0) and (MOVE_INIT == True):
             x_snake_position[0] = 250
             y_snake_position[0] = 250
             game_over(score_temp)
