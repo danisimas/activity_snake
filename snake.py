@@ -7,12 +7,12 @@ from random import *
 import pygame
 
 
-# Sound effects links
-# Apple: https://freesound.org/people/AlienXXX/sounds/132504/
-# Game over: https://freesound.org/people/ScreamStudio/sounds/412168/
+"""Sound effects links"""
+"""Apple: https://freesound.org/people/AlienXXX/sounds/132504/"""
+"""Game over: https://freesound.org/people/ScreamStudio/sounds/412168/"""
 
 
-# Lists to store the coordinates of the snake's body parts
+"""Lists to store the coordinates of the snake's body parts"""
 pygame.init()
 x_snake_position = [0]
 y_snake_position = [0]
@@ -25,11 +25,11 @@ cover.fill((144, 238, 144))
 window.blit(cover, (0, 0))
 
 
-# Refreshing the screen to display everything
+"""Refreshes the screen to display everything"""
 pygame.display.flip()
 
 
-# Loading the main images on the game window
+"""Loads the main images on the game window"""
 head_up = pygame.image.load("assets/arthur_santos_head_snake_up.png").convert_alpha()  # The head
 head_up = pygame.transform.scale(head_up, (30, 30))
 head_left = pygame.image.load("assets/arthur_santos_head_snake_left.png").convert_alpha()
@@ -46,16 +46,16 @@ wall = pygame.image.load("assets/arthur_santos_wall.png").convert_alpha()
 wall = pygame.transform.scale(wall, (25, 50))
 
 
-# Storing the head and fruit's coordinates in variables
+"""Stores the head and fruit's coordinates in variables"""
 position_1 = head_down.get_rect()
 position_fruit = fruit.get_rect()
 
-# Storing the variables in the list variables created before
+"""Stores the variables in the list variables created before"""
 x_snake_position[0] = 250
 y_snake_position[0] = 250
 
 
-# Giving random coordinates to the first fruit of the game
+"""Gives random coordinates to the first fruit of the game"""
 position_fruit.x = randint(2, 10) * STEP
 position_fruit.y = randint(2, 10) * STEP
 
@@ -63,6 +63,9 @@ position_fruit.y = randint(2, 10) * STEP
 for i in range(0, 1000):
     x_snake_position.append(-100)
     y_snake_position.append(-100)
+
+
+"""Snake and Fruits Collision"""
 
 
 def collision(x_coordinates_1, y_coordinates_1, x_coordinates_2, y_coordinates_2, size_snake, size_fruit):
@@ -74,13 +77,18 @@ def collision(x_coordinates_1, y_coordinates_1, x_coordinates_2, y_coordinates_2
         return False
 
 
+"""Score Text"""
+
+
 def text_score(score_temp):
     font = pygame.font.Font("assets/Vermin Vibes 1989.ttf", 25)
     text = font.render("Score: " + str(score_temp), True, (0, 0, 0))
     window.blit(text, (500, 0))
 
 
-# Create Walls
+"""Create Walls"""
+
+
 def walls():
     for i in range(34):
         wall_x = pygame.transform.rotate(wall, 180)
@@ -103,7 +111,7 @@ def main():
     move_left = MOVE_LEFT
     move_init = MOVE_INIT
 
-    # Sound effect
+    """Sound effect"""
     apple_sound = pygame.mixer.Sound('assets/Apple-crunch.wav')
     apple_sound.set_volume(0.1)
     while playing:
@@ -144,18 +152,18 @@ def main():
         window.fill((144, 238, 144))
         window.blit(head_down, (250, 250))
 
-        # Moving each part of the body by giving them new coordinates
+        """Moves each part of the body by giving them new coordinates"""
         for i in range(snake - 1, 0, -1):
             x_snake_position[i] = x_snake_position[(i - 1)]
             y_snake_position[i] = y_snake_position[(i - 1)]
 
-        # Filling the window with white to erase the different parts of the snake
+        """Fills the window with white to erase the different parts of the snake"""
         cover.fill((144, 238, 144))
 
         for i in range(1, snake):
             cover.blit(body_part_1, (x_snake_position[i], y_snake_position[i]))
 
-        # Moving the snake in a certain direction if the user presses a key
+        """Moves the snake in a certain direction if the user presses a key"""
         if move_up:
             y_snake_position[0] = y_snake_position[0] - STEP
             window.blit(cover, (0, 0))
@@ -176,7 +184,7 @@ def main():
             window.blit(cover, (0, 0))
             window.blit(head_left, (x_snake_position[0], y_snake_position[0]))
 
-        # Calling the collision function to check if the snake hits the edges of the window
+        """Calls the collision function to check if the snake hits the edges of the window"""
         if x_snake_position[0] < window_rect.left:
             x_snake_position[0] = 250
             y_snake_position[0] = 250
@@ -221,15 +229,15 @@ def main():
                     position_fruit.x = randint(1, 20) * STEP
                     position_fruit.y = randint(1, 20) * STEP
 
-            # Increasing the size of the snake and the score
+            """Increases the size of the snake and the score"""
             snake = snake + 1
             score_temp = score_temp + 1
             apple_sound.play()
-        # Displaying the score
+        """Displays the score"""
         walls()
         text_score(score_temp)
         pygame.display.flip()
-        # Delaying the game to make the snake move fluent
+        """Delays the game to make the snake move fluent"""
         time.sleep(SPEED / 1000)
     pygame.quit()
     sys.exit()

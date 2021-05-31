@@ -4,15 +4,17 @@ import pygame
 import snake
 import menu
 
+
+"""Game Over Assets"""
 pygame.init()
 window = pygame.display.set_mode((600, 600))
 window_rect = window.get_rect()
 pygame.display.set_caption("Snake")
 score = 0
-
 click = False
 
 
+"""Game Over Function"""
 def game_over(score):
     global click
     flag = 0

@@ -3,6 +3,9 @@ import time
 import pygame
 import snake
 import credits
+
+
+"""Menu Assets"""
 pygame.init()
 window = pygame.display.set_mode((600, 600))
 window_rect = window.get_rect()
@@ -12,6 +15,7 @@ image = pygame.transform.scale(image, (600, 600))
 click = False
 
 
+"""Menu Function"""
 def menu():
     click = False
     while not click:

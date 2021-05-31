@@ -1,10 +1,12 @@
 import sys
 import time
 import pygame
-
 import menu
 import snake
 import credits
+
+
+"""Start Screen Assets"""
 pygame.init()
 window = pygame.display.set_mode((600, 600))
 window_rect = window.get_rect()
@@ -13,6 +15,7 @@ image = pygame.image.load("assets/arthur_santos_init-screen.png").convert_alpha(
 image = pygame.transform.scale(image, (600, 600))
 
 
+"""Start Screen Function"""
 def main():
     window.blit(image, (0, 0))
     pygame.display.update()
