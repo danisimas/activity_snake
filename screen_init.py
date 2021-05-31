@@ -16,6 +16,8 @@ image = pygame.transform.scale(image, (600, 600))
 
 
 """Start Screen Function"""
+
+
 def main():
     window.blit(image, (0, 0))
     pygame.display.update()

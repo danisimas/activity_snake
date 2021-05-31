@@ -15,6 +15,8 @@ click = False
 
 
 """Game Over Function"""
+
+
 def game_over(score):
     global click
     flag = 0
