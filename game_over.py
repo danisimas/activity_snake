@@ -42,11 +42,10 @@ def game_over(score):
                 if event.key == pygame.K_SPACE:
                     menu.menu()
                     click = True
-
-                window.blit(text_1, text_1_rect)
-                window.blit(text_2, text_2_rect)
-                window.blit(text_3, text_3_rect)
-                pygame.display.update()
+        window.blit(text_1, text_1_rect)
+        window.blit(text_2, text_2_rect)
+        window.blit(text_3, text_3_rect)
+        pygame.display.update()
 
 
 def set_click():

@@ -119,7 +119,6 @@ def main():
     apple_sound.set_volume(0.1)
 
     while playing:
-        print(x_snake_position, y_snake_position)
         for event in pygame.event.get():
             if event.type == pygame.QUIT or \
                     (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
@@ -193,36 +192,36 @@ def main():
 
         # Calling the collision function to check if the snake hits the edges of the window
         if x_snake_position[0] < window_rect.left:
-            game_over(score_temp)
-            set_click()
             x_snake_position[0] = 250
             y_snake_position[0] = 250
+            game_over(score_temp)
+            set_click()
 
         if x_snake_position[0] + 35 > window_rect.right:
-            game_over(score_temp)
-            set_click()
             x_snake_position[0] = 250
             y_snake_position[0] = 250
+            game_over(score_temp)
+            set_click()
 
         if y_snake_position[0] <= window_rect.top:
-            game_over(score_temp)
-            set_click()
             x_snake_position[0] = 250
             y_snake_position[0] = 250
+            game_over(score_temp)
+            set_click()
 
         if y_snake_position[0] + 35 >= window_rect.bottom:
-            game_over(score_temp)
-            set_click()
             x_snake_position[0] = 250
             y_snake_position[0] = 250
+            game_over(score_temp)
+            set_click()
 
         if collision(x_snake_position[0], y_snake_position[0], x_snake_position[i], y_snake_position[i], -1,
                      -1) and (
                 MOVE_INIT == True):
-            game_over(score_temp)
-            set_click()
             x_snake_position[0] = 250
             y_snake_position[0] = 250
+            game_over(score_temp)
+            set_click()
 
         window.blit(fruit, position_fruit)
 

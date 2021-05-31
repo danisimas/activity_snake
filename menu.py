@@ -39,6 +39,7 @@ def menu():
                     credits.main()
                     click = True
                     pygame.display.update()
+
                 if text_3_rect.collidepoint(pos_mouse):
                     pygame.quit()
                     sys.exit()
