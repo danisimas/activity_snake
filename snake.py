@@ -12,10 +12,7 @@ import pygame
 # Game over: https://freesound.org/people/ScreamStudio/sounds/412168/
 
 
-
-
 # Lists to store the coordinates of the snake's body parts
-
 pygame.init()
 
 x_snake_position = [0]
@@ -77,8 +74,8 @@ for i in range(0, 1000):
 
 
 def collision(x_coordinates_1, y_coordinates_1, x_coordinates_2, y_coordinates_2, size_snake, size_fruit):
-    if ((x_coordinates_1 + size_snake >= x_coordinates_2) or (
-            x_coordinates_1 >= x_coordinates_2)) and x_coordinates_1 <= x_coordinates_2 + size_fruit:
+    if ((x_coordinates_1 + size_snake >= x_coordinates_2) or (x_coordinates_1 >= x_coordinates_2))\
+            and x_coordinates_1 <= x_coordinates_2 + size_fruit:
         if ((y_coordinates_1 >= y_coordinates_2) or (
                 y_coordinates_1 + size_snake >= y_coordinates_2)) and y_coordinates_1 <= y_coordinates_2 + size_fruit:
             return True
@@ -154,7 +151,7 @@ def main():
                             move_left = move_init = True
 
         window.fill((144, 238, 144))
-        window.blit(head_up, (250, 250))
+        window.blit(head_down, (250, 250))
 
         # Moving each part of the body by giving them new coordinates
         for i in range(snake - 1, 0, -1):
@@ -215,13 +212,12 @@ def main():
             game_over(score_temp)
             set_click()
 
-        if collision(x_snake_position[0], y_snake_position[0], x_snake_position[i], y_snake_position[i], 0,
-                     0) and (MOVE_INIT == True):
+        if collision(x_snake_position[0], y_snake_position[0], x_snake_position[i], y_snake_position[i], 0, 0)\
+                and MOVE_INIT:
             x_snake_position[0] = 250
             y_snake_position[0] = 250
             game_over(score_temp)
             set_click()
-
         window.blit(fruit, position_fruit)
 
         if collision(x_snake_position[0], y_snake_position[0], position_fruit.x, position_fruit.y, 20, 15):
