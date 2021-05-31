@@ -122,29 +122,29 @@ def main():
                 playing = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
-                    if move_up == False and move_init == True:
-                        if move_down == True:
+                    if move_up is False and move_init is True:
+                        if move_down is True:
                             move_up = False
                         else:
                             move_down = move_right = move_left = False
                             move_up = move_init = True
                 if event.key == pygame.K_DOWN:
-                    if move_down == False:
-                        if move_up == True:
+                    if move_down is False:
+                        if move_up is True:
                             move_down = False
                         else:
                             move_right = move_left = move_up = False
                             move_down = move_init = True
                 if event.key == pygame.K_RIGHT:
-                    if move_right == False:
-                        if move_left == True:
+                    if move_right is False:
+                        if move_left is True:
                             move_right = False
                         else:
                             move_left = move_up = move_down = False
                             move_right = move_init = True
                 if event.key == pygame.K_LEFT:
-                    if move_left == False:
-                        if move_right == True:
+                    if move_left is False:
+                        if move_right is True:
                             move_left = False
                         else:
                             move_right = move_down = move_up = False
