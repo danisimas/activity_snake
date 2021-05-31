@@ -2,6 +2,7 @@ import sys
 import time
 import pygame
 import snake
+import menu
 
 pygame.init()
 window = pygame.display.set_mode((600, 600))
@@ -16,38 +17,20 @@ def main():
     click = False
     while not click:
         window.blit(image, (0, 0))
-        font_2 = pygame.font.Font("assets/Vermin Vibes 1989.ttf", 58)
-        text_1 = 'PLAY'
-        text_2 = "CREDITS"
-        text_3 = 'EXIT'
-        text_1 = font_2.render(text_1, True, (0, 0, 0))
-        text_2 = font_2.render(text_2, True, (0, 0, 0))
-        text_3 = font_2.render(text_3, True, (0, 0, 0))
-        text_1_rect = text_1.get_rect()
-        text_2_rect = text_2.get_rect()
-        text_3_rect = text_3.get_rect()
-        text_1_rect.center = (300, 170)
-        text_2_rect.center = (300, 300)
-        text_3_rect.center = (300, 430)
-        pos_mouse = pygame.mouse.get_pos()
+        font_2 = pygame.font.Font("assets/Vermin Vibes 1989.ttf", 24)
+        text_2 = "Press space to back menu"
+        text_back = font_2.render(text_2, True, (0, 0, 0))
+        text_back_rect = text_back.get_rect()
+        text_back_rect.center = (300, 520)
+
         for event in pygame.event.get():
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if text_1_rect.collidepoint(pos_mouse):
-                    snake.main()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    menu.menu()
                     click = True
-                if text_2_rect.collidepoint(pos_mouse):
-                    credits.main()
-                    click = True
-                    pygame.display.update()
 
-                if text_3_rect.collidepoint(pos_mouse):
-                    pygame.quit()
-                    sys.exit()
-
-            window.blit(text_1, text_1_rect)
-            window.blit(text_2, text_2_rect)
-            window.blit(text_3, text_3_rect)
-            pygame.display.update()
+        window.blit(text_back, text_back_rect)
+        pygame.display.update()
 
 
 if __name__ == '__main__':

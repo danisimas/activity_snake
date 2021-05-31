@@ -2,7 +2,7 @@ import sys
 import time
 import pygame
 import snake
-
+import credits
 pygame.init()
 window = pygame.display.set_mode((600, 600))
 window_rect = window.get_rect()

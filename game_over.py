@@ -21,7 +21,7 @@ def game_over(score):
         font = pygame.font.Font("assets/Vermin Vibes 1989.ttf", 48)
         font_2 = pygame.font.Font("assets/Vermin Vibes 1989.ttf", 38)
         text_1 = 'GAME OVER'
-        text_2 = "Press espace to back menu"
+        text_2 = "Press space to back menu"
         text_3 = 'Score:' + str(score)
         text_1 = font.render(text_1, True, (0, 0, 0))
         text_2 = font_2.render(text_2, True, (0, 0, 0))
